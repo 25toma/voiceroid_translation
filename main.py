@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import recording
 import voiro_auto
 import translate
