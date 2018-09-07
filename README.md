@@ -21,11 +21,15 @@ Windows10 コマンドプロンプト
 VOICEROID2のソフトのいずれか(有料)
 Python3系(on windows)
 
-### 実行方法
-1. GoogleAPIKeyの取得と、コードへの追加。
+### 準備方法
+1. GoogleAPIKeyの取得
 2. GoogleSpeechToTextの有効化
-3. VOICEROID2 の起動
-4. 実行　>python main.py
+3. config.py.formatファイルのkeyに、そのkeyを代入
+4. config.py.formatファイルを、config.pyファイルに名称変更
+
+### 実行方法
+1. VOICEROID2 の起動
+2. main.pyのあるフォルダで、>python main.py
 
 ## 蛇足
 ### コードの動作イメージ
