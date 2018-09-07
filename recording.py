@@ -12,7 +12,6 @@ WAVE_OUTPUT_FILENAME = "dump.wav"
 
 
 #----------関数----------
-
 def volume_detection(stream, CHUNK, FRAME_UNIT):
     frame = []
     detect = False
@@ -112,10 +111,10 @@ def record():
         return None
     
     #音声情報を全て配列に格納する
-    speaksJP=[]
+    trans_texts=[]
     for i in response["results"]:
-        speaksJP.append(i["alternatives"][0]["transcript"])
-    return speaksJP
+        trans_texts.append(i["alternatives"][0]["transcript"])
+    return trans_texts
 
 
 
