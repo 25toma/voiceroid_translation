@@ -1,0 +1,24 @@
+#-----重要-----
+
+#APIキーを設定
+key = "your Google - API key"
+
+
+#-----自由-----
+
+#音声検知レベル(音量ベース)
+THRESHOLD = 0.05
+
+#音声検知の単位時間
+RECORD_UNIT = 0.5
+
+#録音したい言語
+RECORD_LANG = "en-US"     
+
+#何語に訳してほしいか
+TRANS_LANG = "jp"
+
+#-----デバッグ向け-----
+
+#翻訳前後の内容をテキスト形式で表示する
+TEXT_CHECK = True 

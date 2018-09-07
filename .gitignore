@@ -1,0 +1,5 @@
+trush/
+__pycache__/
+*.wav
+config.py
+way.tex

@@ -1,39 +1,32 @@
-# -*- coding: utf-8 -*-
 import base64
 from googleapiclient import discovery
 import httplib2
 import numpy as np
 import pyaudio  #録音機能を使うためのライブラリ
 import wave     #wavファイルを扱うためのライブラリ
+import config   #設定情報
 
 
-
-
-#----------重要設定値----------
-
-#APIキーを設定
-key = "your API key"
-
-#音声を保存するファイル名
+#音声を一時保存するファイル名
 WAVE_OUTPUT_FILENAME = "dump.wav"
-
-#録音したい言語
-RECORD_LANG = "en-US"     
-
-
 
 
 #----------関数----------
 
-def volume_detection(stream, CHUNK):
-    THRESHOLD = 0.05         #音声検知レベル
+def volume_detection(stream, CHUNK, FRAME_UNIT):
+    frame = []
+    detect = False
     
-    while True:
+    for i in range(FRAME_UNIT): 
         data = stream.read(CHUNK)
         x = np.frombuffer(data,dtype="int16")/32768.0
-        if x.max() > THRESHOLD:
-            return data
-
+        frame.append(data)
+        if x.max() > config.THRESHOLD:
+            detect = True
+    if detect:
+        return frame
+    else:
+        return None
 
 def recording2wave():
     #基本情報の設定
@@ -44,8 +37,7 @@ def recording2wave():
     iDeviceIndex = 0         #録音デバイスのインデックス番号
         
     #無音時、翻訳しない設定
-    RECORD_SECONDS = 5       #音声検知してからの録音時間
-    FRAME_NUM = int(RATE / CHUNK * RECORD_SECONDS) #録音フレーム数
+    FRAME_UNIT = int(RATE / CHUNK * config.RECORD_UNIT) #録音フレーム数
     
     audio = pyaudio.PyAudio()
     stream = audio.open(format=FORMAT, channels=CHANNELS,
@@ -53,15 +45,19 @@ def recording2wave():
             input_device_index = iDeviceIndex, #録音デバイスのインデックス番号
             frames_per_buffer=CHUNK)
     
-    frontData = volume_detection(stream, CHUNK)
+    fvoice = None
+    while fvoice is None:
+        fvoice = volume_detection(stream, CHUNK, FRAME_UNIT)
     
-    frames = [frontData]
     print ("recording...")
-    for i in range(0, FRAME_NUM):
-        data = stream.read(CHUNK)
-        frames.append(data)
+    frames = fvoice
+    while True:
+        voice = volume_detection(stream, CHUNK, FRAME_UNIT)
+        if voice is None:
+            break
+        else:
+            frames+=voice
     print ("finished recording")
-    
     #--------終了処理---------
     stream.stop_stream()
     stream.close()
@@ -83,7 +79,7 @@ def get_speech_service():
                      'version={apiVersion}')
     http = httplib2.Http()
     return discovery.build(
-        'speech', 'v1', http=http, discoveryServiceUrl=DISCOVERY_URL, developerKey=key)
+        'speech', 'v1', http=http, discoveryServiceUrl=DISCOVERY_URL, developerKey=config.key)
 
 
 def ApplySpeechAPI():
@@ -98,7 +94,7 @@ def ApplySpeechAPI():
             'config': {
                 'encoding': 'LINEAR16',
                 'sampleRateHertz': 44100,
-                'languageCode': RECORD_LANG, 
+                'languageCode': config.RECORD_LANG, 
                 'enableWordTimeOffsets': 'false',
             },
             'audio': {

@@ -1,23 +1,23 @@
-# -*- coding: utf-8 -*-
 import recording
 import voiro_auto
 import translate
+import config
 
-TEXT_CHECK = True #翻訳前後の内容をテキスト形式で表示する
+#----------実行----------
 transObj = translate.TranslateNormal()
 
 while True:
     #英語を録音して、日本語にする
-    speaksEN = recording.record()
-    if speaksEN is None:
+    raw_text = recording.record()
+    if raw_text is None:
         continue
-    speaksJP = transObj.trans(speaksEN)
-    speaksJP = "\r\n".join(speaksJP)
+    trans_text = transObj.trans(raw_text)
+    trans_text = "\r\n".join(trans_text)
     
     #ボイロの子に喋ってもらう
-    voiro_auto.talkVOICEROID2(speaksJP)
+    voiro_auto.talkVOICEROID2(trans_text)
     
     #デバッグ出力
-    if TEXT_CHECK:
-        print(speaksEN)
-        print(speaksJP)
+    if config.TEXT_CHECK:
+        print(raw_text)
+        print(trans_text)

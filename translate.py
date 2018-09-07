@@ -3,17 +3,19 @@ from googletrans import Translator
 from google.cloud import translate
 from abc import ABCMeta, abstractmethod
 import six
+import config
 
-#-----抽象クラス-----
+#-----$BCj>]%/%i%9(B-----
 class TranslateMeta(metaclass=ABCMeta):
     @abstractmethod
     def trans(self, speaksEN):
         pass
 
 
-#-----継承クラス-----
 
-#通常のgoogle翻訳を使用(無料)
+#-----$B7Q>5%/%i%9(B-----
+
+#$BDL>o$N(Bgoogle$BK]Lu$r;HMQ(B($BL5NA(B)
 class TranslateNormal(TranslateMeta):
     def __init__(self, LANG = "ja"):
         self.translator = Translator()
@@ -27,7 +29,7 @@ class TranslateNormal(TranslateMeta):
         return speaksJP
 
 
-#googleの NeuralNet APIを使用(有料)
+#google$B$N(B NeuralNet API$B$r;HMQ(B($BM-NA(B)
 class TranslateAPI(TranslateMeta):
     def __init__(self, LANG = "ja"):
         self.mdest = LANG
@@ -43,7 +45,7 @@ class TranslateAPI(TranslateMeta):
         speaksJP = [result["translatedText"] for result in results]
         return speaksJP
 
-#デバッグ用
+#$B%G%P%C%0MQ(B
 if __name__ == "__main__":
     speaksEN = ["Akane-chan is cute yatter!"]
     transObj = TranslateNormal()
