@@ -4,12 +4,13 @@ import translate
 import config
 
 #----------実行----------
+phone_obj = recording.Microphone()
 trans_obj = translate.TranslateNormal()
 voiro_obj = voiro_auto.Voiro_Pywinauto()
 
 while True:
     #英語を録音して、日本語にする
-    raw_texts = recording.record()
+    raw_texts = phone_obj.record()
     if raw_texts is None:
         continue
     trans_texts = trans_obj.trans(raw_texts)
