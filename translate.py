@@ -29,7 +29,7 @@ class TranslateNormal(TranslateMeta):
 
 
 #googleの NeuralNet APIを使用(有料)
-class TranslateAPI(TranslateMeta):
+class TranslateNMT(TranslateMeta):
     def __init__(self):
         self.translate_client = translate.Client()
     

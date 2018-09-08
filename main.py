@@ -5,7 +5,7 @@ import config
 
 #----------実行----------
 phone_obj = recording.Microphone()
-trans_obj = translate.TranslateNormal()
+trans_obj = translate.TranslateNMT()
 voiro_obj = voiro_auto.Voiro_Pywinauto()
 
 while True:

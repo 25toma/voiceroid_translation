@@ -26,6 +26,8 @@ Python3系(on windows)
 2. GoogleSpeechToTextの有効化
 3. config.py.formatファイルのkeyに、そのkeyを代入
 4. config.py.formatファイルを、config.pyファイルに名称変更
+5. main.pyの初めにあるクラス選択欄で、好きな組み合わせを選択する。
+（translateにてNMTを使用する場合は、[Google Cloud - 認証の開始](https://cloud.google.com/docs/authentication/getting-started)）を参照して下さい。TranslateNormalを使用する分には不要です。
 
 ### 実行方法
 1. VOICEROID2 の起動
