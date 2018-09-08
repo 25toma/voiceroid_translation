@@ -2,7 +2,7 @@
 
 #APIキーを設定
 key = "your Google - API key"
-
+A3RTkey = "your A3RT key in Recruit" 
 
 #-----自由-----
 
