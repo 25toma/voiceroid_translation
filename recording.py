@@ -12,11 +12,12 @@ WAVE_OUTPUT_FILENAME = "dump.wav"
 
 
 #----------関数----------
+
 def volume_detection(stream, CHUNK, FRAME_UNIT):
     frame = []
     detect = False
     
-    for i in range(FRAME_UNIT): 
+    for i in range(FRAME_UNIT):
         data = stream.read(CHUNK)
         x = np.frombuffer(data,dtype="int16")/32768.0
         frame.append(data)
@@ -111,10 +112,10 @@ def record():
         return None
     
     #音声情報を全て配列に格納する
-    trans_texts=[]
+    raw_text=[]
     for i in response["results"]:
-        trans_texts.append(i["alternatives"][0]["transcript"])
-    return trans_texts
+        raw_text.append(i["alternatives"][0]["transcript"])
+    return raw_text
 
 
 
